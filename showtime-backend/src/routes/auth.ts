@@ -1,7 +1,8 @@
 import express, { Router, Request, Response, RequestHandler } from "express";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client/default.js";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { AuthRequest, isAuth } from "../middlewares/isAuth.js";
 
 const router: Router = express.Router();
 const prisma = new PrismaClient();
@@ -67,6 +68,20 @@ const loginHandler: RequestHandler = async (req, res) => {
         res.status(500).json({ message: "Login failed", error: error.message });
     }
 };
+router.get("/me", isAuth, async (req: AuthRequest, res: Response) => {
+    if (!req.userId) {
+       res.status(401).json({ message: "Unauthorized" });
+       return;
+    }
+  
+    const user = await prisma.user.findUnique({
+      where: { id: req.userId },
+      select: { id: true, email: true, name: true },
+    });
+  
+    res.json({ user });
+  });
+
 
 router.post("/signup", signupHandler);
 router.post("/login", loginHandler);
