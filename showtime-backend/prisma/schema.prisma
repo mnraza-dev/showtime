@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String   @id @default(cuid())
+  email    String   @unique
+  name     String
+  password String
+  bookings Booking[]
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  bannerUrl   String
+  shows       Show[]
+}
+
+model Show {
+  id       String   @id @default(cuid())
+  event    Event    @relation(fields: [eventId], references: [id])
+  eventId  String
+  date     DateTime
+  time     String
+  seats    Seat[]
+  bookings Booking[]
+}
+
+model Seat {
+  id       String   @id @default(cuid())
+  show     Show     @relation(fields: [showId], references: [id])
+  showId   String
+  number   String
+  isBooked Boolean  @default(false)
+}
+
+model Booking {
+  id       String   @id @default(cuid())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  show     Show     @relation(fields: [showId], references: [id])
+  showId   String
+  seatIds  String[]
+  createdAt DateTime @default(now())
+}

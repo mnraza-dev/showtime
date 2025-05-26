@@ -10,18 +10,20 @@
     "dev": "concurrently \"tsc -w\" \" nodemon dist/index.js\"",
     "start": "node dist/index.js",
     "build": "tsc"
-
   },
   "dependencies": {
+    "@prisma/client": "^6.8.2",
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
     "bcrypt": "^6.0.0",
     "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.15.0"
+    "mongoose": "^8.15.0",
+    "prisma": "^6.8.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.10",
