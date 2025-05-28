@@ -1,17 +1,34 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, SafeAreaView, StatusBar } from 'react-native';
+import MovieCarousel from '../components/MovieCarousel';
 
-const HomeScreen: React.FC = () => {
+const dummyMovies = [
+  {
+    id: '1',
+    title: 'The Matrix',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg',
+  },
+  {
+    id: '2',
+    title: 'Inception',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg',
+  },
+  {
+    id: '3',
+    title: 'Interstellar',
+    posterUrl: 'https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg',
+  },
+];
+
+const HomeScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to BookMyShow Clone</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
+      <StatusBar barStyle="light-content" />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <MovieCarousel movies={dummyMovies} />
+      </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  title: { fontSize: 24, fontWeight: 'bold' },
-});
 
 export default HomeScreen;
